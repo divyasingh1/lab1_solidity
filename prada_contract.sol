@@ -7,7 +7,6 @@ contract  Prada_product {
     string description;
     string manufacturer;
     bool initialized; 
- 
 }
    
    event ProductCreate(address account, string uuid, string manufacturer);
@@ -25,7 +24,8 @@ contract  Prada_product {
     
    function createProduct(string name, string description, string uuid, string manufacturer) public{
       if(productStore[uuid].initialized) {
-        emit ProductCreate(msg.sender, uuid, "Asset with this UUID already exists.");
+        emit RejectCreate(msg.sender, uuid, "Asset with this UUID already exists.");
+        revert("Asset with this UUID already exists");
         return;
       }
 
@@ -37,11 +37,13 @@ contract  Prada_product {
     function transferProduct(address to, string uuid) public {
         if(!productStore[uuid].initialized) {
           emit RejectTransfer(msg.sender, to, uuid, "No asset with this UUID exists");
+          revert("No asset with this UUID exists");
           return;
         }
 
         if(!walletStore[msg.sender][uuid]) {
            emit RejectTransfer(msg.sender, to, uuid, "Sender does not own this asset.");
+           revert("Sender does not own this asset.");
            return;
         }
 
@@ -58,8 +60,7 @@ contract  Prada_product {
          if(walletStore[owner][uuid]) {
            return true;
           }
+         revert("Product does not exist");
          return false;
      }
 }
-
-
