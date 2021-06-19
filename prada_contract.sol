@@ -23,7 +23,7 @@ contract  Prada_product {
    }
     
     
-   function createAsset(string name, string description, string uuid, string manufacturer) public{
+   function createProduct(string name, string description, string uuid, string manufacturer) public{
       if(productStore[uuid].initialized) {
         emit ProductCreate(msg.sender, uuid, "Asset with this UUID already exists.");
         return;
@@ -34,7 +34,7 @@ contract  Prada_product {
       emit ProductCreate(msg.sender, uuid, manufacturer);
    }
     
-    function transferAsset(address to, string uuid) public {
+    function transferProduct(address to, string uuid) public {
         if(!productStore[uuid].initialized) {
           emit RejectTransfer(msg.sender, to, uuid, "No asset with this UUID exists");
           return;
@@ -50,7 +50,7 @@ contract  Prada_product {
         emit ProductTransfer(msg.sender,  to, uuid);
     }
     
-    function getAssetByUUID(string uuid) public constant returns (string, string, string, bool) {
+    function getProductByProductId(string uuid) public constant returns (string, string, string, bool) {
        return (productStore[uuid].name, productStore[uuid].description, productStore[uuid].manufacturer, productStore[uuid].initialized);
     }
     
