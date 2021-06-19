@@ -69,7 +69,7 @@ contract  Prada_product {
   }
    
     
-   function createProduct(string name, string description, string uuid, string manufacturerName) onlyManufacturar  public{
+   function createProduct(string name, string description, string uuid, string manufacturerName) onlyManufacturar  public {
       if(productStore[uuid].initialized) {
         emit RejectCreate(msg.sender, uuid, "Asset with this UUID already exists.");
         revert("Asset with this UUID already exists");
